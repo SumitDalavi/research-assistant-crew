@@ -1,36 +1,43 @@
-import sys
-from dotenv import load_dotenv
-from crewai import Crew, Process
+"""CLI + FastAPI entrypoint for the Research Assistant Crew."""
+import os, sys
+from fastapi import FastAPI
+from pydantic import BaseModel
+import uvicorn
 
-# Load environment variables (e.g. OPENAI_API_KEY)
-load_dotenv()
+from src.crew import ResearchCrew
+from src.output.formatter import save_report
 
-from src.agents import search_agent, analysis_agent, writer_agent
-from src.tasks import search_task, analyze_task, write_task
+app = FastAPI(title="Research Assistant Crew", version="1.0.0")
 
-def run_crew(topic: str):
-    print(f"\n🚀 Initiating Research Assistant Crew for topic: '{topic}'\n")
 
-    # Initialize the Crew
-    research_crew = Crew(
-        agents=[search_agent, analysis_agent, writer_agent],
-        tasks=[search_task, analyze_task, write_task],
-        process=Process.sequential,  # Agents run in sequence
-        verbose=True
-    )
+class ResearchRequest(BaseModel):
+	topic: str
+	save_to_file: bool = True
 
-    # Kick off the research process
-    result = research_crew.kickoff(inputs={"topic": topic})
 
-    print("\n================================================\n")
-    print("📋 FINAL RESEARCH REPORT:")
-    print("\n================================================\n")
-    print(result)
+@app.post("/api/v1/research")
+async def research(req: ResearchRequest):
+	crew = ResearchCrew(req.topic)
+	report = crew.run()
+	result = {"topic": req.topic, "report": report}
+	if req.save_to_file:
+		path = save_report(req.topic, report)
+		result["saved_to"] = path
+	return result
+
+
+@app.get("/health")
+def health():
+	return {"status": "ok", "llm_key_set": bool(os.getenv("OPENAI_API_KEY"))}
+
 
 if __name__ == "__main__":
-    # Allow passing a topic via command line arguments
-    topic = "State of agentic AI, 2026"
-    if len(sys.argv) > 1:
-        topic = sys.argv[1]
-    
-    run_crew(topic)
+	if len(sys.argv) > 1 and sys.argv[1] == "run":
+		topic = " ".join(sys.argv[2:]) or "AI agent orchestration patterns"
+		print(f"\nResearching: {topic}\n")
+		crew = ResearchCrew(topic)
+		report = crew.run()
+		path = save_report(topic, report)
+		print(f"\nReport saved to: {path}")
+	else:
+		uvicorn.run("src.main:app", host="0.0.0.0", port=8000, reload=True)

@@ -1,25 +1,46 @@
+"""CrewAI task definitions for the research pipeline."""
 from crewai import Task
-from .agents import search_agent, analysis_agent, writer_agent
 
-# 1. Search Task
-search_task = Task(
-    description="Research the topic: '{topic}'. Use the web search tool to find 5-8 credible, recent sources. Focus on official documentation, academic papers, or reputable industry blogs.",
-    expected_output="A list of 5-8 sources containing the Title, URL, and a 1-sentence relevance note for each.",
-    agent=search_agent
-)
 
-# 2. Analysis Task
-analyze_task = Task(
-    description="Review the sources provided by the Search Agent. Extract the 3-5 strongest claims from these sources.",
-    expected_output="A list of 3-5 strong claims, each accompanied by the supporting evidence and the URL of the source it came from.",
-    agent=analysis_agent,
-    context=[search_task]
-)
+def make_tasks(researcher, analyst, writer, topic: str):
+	search_task = Task(
+		description=(
+			f"Search the web thoroughly for '{topic}'. "
+			"Find 5-8 credible, recent sources. For each source return: title, URL, and a 1-2 sentence "
+			"summary of why it is relevant. Prefer official docs, research papers, and reputable blogs "
+			"over aggregator sites."
+		),
+		expected_output=(
+			"A structured list of 5-8 sources with title, URL, and relevance note for each."
+		),
+		agent=researcher,
+	)
 
-# 3. Write Task
-write_task = Task(
-    description="Synthesize the claims extracted by the Analysis Agent into a final structured report. Ensure you open directly with the answer (no filler intros) and back it with the provided evidence.",
-    expected_output="A Markdown-formatted report containing:\n1. A 2-sentence summary\n2. 3-5 headed sections detailing the claims\n3. A Sources List at the bottom.",
-    agent=writer_agent,
-    context=[analyze_task]
-)
+	analysis_task = Task(
+		description=(
+			"Review the search results provided. Extract the 4-6 strongest, most evidence-backed "
+			claims about the topic. For each claim, cite which source supports it. "
+			"Flag any contradictions or gaps in the evidence. Do NOT invent facts."
+		),
+		expected_output=(
+			"A list of 4-6 key claims with source citations, plus a brief note on any evidence gaps."
+		),
+		agent=analyst,
+		context=[search_task],
+	)
+
+	writing_task = Task(
+		description=(
+			f"Write a comprehensive research report on '{topic}' based on the analysis. "
+			"Include: an executive summary (3-4 sentences), key findings as bullet points, "
+			"a 2-3 paragraph analysis, and a numbered reference list. "
+			"Tone: professional, objective. Format: Markdown."
+		),
+		expected_output=(
+			"A complete Markdown research report with summary, findings, analysis, and references."
+		),
+		agent=writer,
+		context=[search_task, analysis_task],
+	)
+
+	return [search_task, analysis_task, writing_task]
