@@ -1,4 +1,5 @@
 """Citation formatter — turns raw search results into numbered references."""
+
 from __future__ import annotations
 from typing import List, Dict
 

@@ -1,4 +1,5 @@
 """Markdown report formatter for the research crew output."""
+
 from __future__ import annotations
 from datetime import datetime
 from typing import List, Dict
@@ -6,7 +7,9 @@ from typing import List, Dict
 from src.tools.citation import format_citations
 
 
-def format_report(topic: str, summary: str, key_claims: List[str], sources: List[Dict]) -> str:
+def format_report(
+    topic: str, summary: str, key_claims: List[str], sources: List[Dict]
+) -> str:
     """Build a structured Markdown research report."""
     date = datetime.utcnow().strftime("%Y-%m-%d")
     claims_md = "\n".join(f"- {c}" for c in key_claims)
@@ -39,6 +42,7 @@ Readers are encouraged to consult the original sources for full context.
 def save_report(topic: str, content: str, output_dir: str = "output") -> str:
     """Save the report as a Markdown file and return the path."""
     import os
+
     os.makedirs(output_dir, exist_ok=True)
     slug = topic.lower().replace(" ", "-")[:40]
     ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S")

@@ -19,7 +19,7 @@ def make_tasks(researcher, analyst, writer, topic: str):
 	analysis_task = Task(
 		description=(
 			"Review the search results provided. Extract the 4-6 strongest, most evidence-backed "
-			claims about the topic. For each claim, cite which source supports it. "
+			"claims about the topic. For each claim, cite which source supports it. "
 			"Flag any contradictions or gaps in the evidence. Do NOT invent facts."
 		),
 		expected_output=(
