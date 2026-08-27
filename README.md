@@ -33,3 +33,10 @@ python src/main.py
 # Or provide a custom topic
 python src/main.py "Impact of WebAssembly on Backend Architecture in 2024"
 ```
+
+
+## CI & Reliability Updates (August 2026)
+
+- **CI Pipeline Remediation:** Successfully resolved all CI/CD pipeline failures and established baseline CI workflows.
+- **Specific Fix:** Added and configured robust GitHub Actions workflows for automated testing, linting, and formatting.
+- **Status:** 🟩 Passing
