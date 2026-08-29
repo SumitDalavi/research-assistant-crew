@@ -1,3 +1,6 @@
+> **NOTE:** This repository is an archival lab or partial prototype. It is not actively maintained and should not be used as a reference for production-grade deployments or performance benchmarks.
+
+
 # Research Assistant Crew
 
 An autonomous multi-agent web research and summary pipeline built with CrewAI.

@@ -1,4 +1,5 @@
 # Architecture: Research Assistant Crew
+> Maturity: Functional Prototype
 
 This project utilizes a multi-agent orchestration architecture powered by **CrewAI**.
 
