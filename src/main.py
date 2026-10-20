@@ -27,9 +27,15 @@ async def research(req: ResearchRequest):
     return result
 
 
+from src.credential_mode import is_live_openai_key, detect_mode
+
 @app.get("/health")
 def health():
-    return {"status": "ok", "llm_key_set": bool(os.getenv("OPENAI_API_KEY"))}
+    return {
+        "status": "ok",
+        "llm_key_set": is_live_openai_key(),
+        "mode": detect_mode()
+    }
 
 
 if __name__ == "__main__":

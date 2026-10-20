@@ -5,6 +5,7 @@ from crewai import Agent, Crew, Process
 from langchain_openai import ChatOpenAI
 from src.tasks import make_tasks
 from src.tools.search import web_search
+from src.credential_mode import is_live_openai_key
 
 try:
     from duckduckgo_search import DDGS
@@ -60,6 +61,20 @@ class ResearchCrew:
         return researcher, analyst, writer
 
     def run(self) -> str:
+        if not is_live_openai_key():
+            print(f"[crew] Running in PCL Mock Mode (zero network calls) for: {self.topic}")
+            return (
+                f"# Research Report: {self.topic}\n\n"
+                f"## Executive Summary\n"
+                f"[MOCK REPORT — Running in offline/CI mode with Progressive Credential Loading]\n"
+                f"Authoritative research findings synthesized for {self.topic}.\n\n"
+                f"## Key Findings\n"
+                f"1. Core architecture patterns emphasize modular agent orchestration.\n"
+                f"2. Progressive Credential Loading enables seamless promotion from mock to live backends.\n\n"
+                f"## References\n"
+                f"1. [Antigravity Portfolio Guide](https://github.com/SumitDalavi)\n"
+            )
+
         researcher, analyst, writer = self._make_agents()
         tasks = make_tasks(researcher, analyst, writer, self.topic)
         crew = Crew(
