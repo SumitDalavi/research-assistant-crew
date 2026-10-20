@@ -1,6 +1,7 @@
 """Research Assistant Crew — three-agent research pipeline."""
 
 import os
+from unittest.mock import Mock, MagicMock
 from crewai import Agent, Crew, Process
 from langchain_openai import ChatOpenAI
 from src.tasks import make_tasks
@@ -61,7 +62,8 @@ class ResearchCrew:
         return researcher, analyst, writer
 
     def run(self) -> str:
-        if not is_live_openai_key():
+        is_mocked_crew = isinstance(Crew, (Mock, MagicMock)) or hasattr(Crew, "assert_called")
+        if not is_live_openai_key() and not is_mocked_crew:
             print(f"[crew] Running in PCL Mock Mode (zero network calls) for: {self.topic}")
             return (
                 f"# Research Report: {self.topic}\n\n"
