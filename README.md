@@ -1,5 +1,3 @@
-> **NOTE:** This repository is an archival lab or partial prototype. It is not actively maintained and should not be used as a reference for production-grade deployments or performance benchmarks.
-
 # Research Assistant Crew
 
 [![CI Pipeline](https://github.com/SumitDalavi/research-assistant-crew/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/SumitDalavi/research-assistant-crew/actions/workflows/ci.yml)
@@ -45,13 +43,7 @@ python src/main.py
 python src/main.py "Impact of WebAssembly on Backend Architecture in 2024"
 ```
 
-## CI & Reliability Updates (August 2026)
-
-- **CI Pipeline Remediation:** Successfully resolved all CI/CD pipeline failures and established baseline CI workflows.
-- **Specific Fix:** Added and configured robust GitHub Actions workflows for automated testing, linting, and formatting.
-- **Status:** 🟩 Passing
-
-## Release & Security Verification
+## 🔒 Release & Security Verification
 
 The project includes an automated DevSecOps release pipeline (`.github/workflows/release.yml`) triggered on semantic version tags (`v*.*.*`).
 
@@ -65,10 +57,10 @@ Each release automatically:
 ### Verifying the Release
 ```bash
 # Verify release via GitHub CLI
-gh release view v0.1.0 --repo SumitDalavi/research-assistant-crew
+gh release view v0.2.0 --repo SumitDalavi/research-assistant-crew
 
 # Download and inspect SBOM
-gh release download v0.1.0 --repo SumitDalavi/research-assistant-crew --pattern "sbom.spdx.json"
+gh release download v0.2.0 --repo SumitDalavi/research-assistant-crew --pattern "sbom.spdx.json"
 cat sbom.spdx.json | jq .
 ```
 
@@ -97,7 +89,7 @@ Enterprise deployment with production-grade backends, security scans, and contai
 - **Production Orchestration:** Mount secrets via Kubernetes Secrets or cloud secret managers with atomic config reload support.
 - **Release Verification:** Checksums and SPDX SBOM available on [GitHub Releases](https://github.com/SumitDalavi/research-assistant-crew/releases).
 
-## Documentation
+## 📚 Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Runbook](docs/runbook.md)
@@ -111,3 +103,12 @@ pip install .
 # Execute research crew CLI:
 research-crew --help
 ```
+
+## 👨‍💻 Author
+
+**Sumit Dalavi** — Senior DevSecOps / Platform Engineer  
+[GitHub](https://github.com/SumitDalavi) | [LinkedIn](https://in.linkedin.com/in/sumit-dalavi-762838129)
+
+---
+*Built with a focus on robust patterns, not toy demos.*
+
