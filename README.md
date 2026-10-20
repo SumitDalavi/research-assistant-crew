@@ -1,14 +1,15 @@
 > **NOTE:** This repository is an archival lab or partial prototype. It is not actively maintained and should not be used as a reference for production-grade deployments or performance benchmarks.
 
-
 # Research Assistant Crew
 
-[![Release](https://img.shields.io/github/v/release/SumitDalavi/research-assistant-crew?color=blue&logo=github)](https://github.com/SumitDalavi/research-assistant-crew/releases)
+[![CI Pipeline](https://github.com/SumitDalavi/research-assistant-crew/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/SumitDalavi/research-assistant-crew/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SumitDalavi/research-assistant-crew?color=0969da&label=release&logo=github)](https://github.com/SumitDalavi/research-assistant-crew/releases)
 [![Release Workflow](https://github.com/SumitDalavi/research-assistant-crew/actions/workflows/release.yml/badge.svg)](https://github.com/SumitDalavi/research-assistant-crew/actions/workflows/release.yml)
-[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/research-assistant-crew/releases)
-
-[![Release](https://img.shields.io/github/v/release/SumitDalavi/research-assistant-crew?color=blue&logo=github)](https://github.com/SumitDalavi/research-assistant-crew/releases)
-[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/research-assistant-crew/releases)
+[![GHCR Container](https://img.shields.io/badge/ghcr.io-v0.2.0-blue?logo=docker&logoColor=white)](https://github.com/SumitDalavi/research-assistant-crew/pkgs/container/research-assistant-crew)
+[![PyPI Wheel](https://img.shields.io/badge/wheel-0.2.0-3776ab?logo=pypi&logoColor=white)](https://github.com/SumitDalavi/research-assistant-crew/releases/tag/v0.2.0)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org)
+[![SBOM](https://img.shields.io/badge/SBOM-SPDX%202.3-blueviolet?logo=spdx)](https://github.com/SumitDalavi/research-assistant-crew/releases/tag/v0.2.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 An autonomous multi-agent web research and summary pipeline built with CrewAI.
 
@@ -43,7 +44,6 @@ python src/main.py
 # Or provide a custom topic
 python src/main.py "Impact of WebAssembly on Backend Architecture in 2024"
 ```
-
 
 ## CI & Reliability Updates (August 2026)
 
